@@ -1,0 +1,44 @@
+name: Mettre à jour le calendrier Unrivaled (.ics)
+
+on:
+  schedule:
+    # S'exécute tous les lundis à 6h00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # Permet de lancer l'action manuellement depuis GitHub
+
+jobs:
+  update-ics:
+    runs-on: ubuntu-latest
+    
+    # Droits nécessaires pour permettre au script de modifier et commiter le fichier ICS
+    permissions:
+      contents: write
+
+    steps:
+      # 1. Récupérer le code source du dépôt
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+
+      # 2. Configurer l'environnement Python
+      - name: Configuration de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # 3. Installer les dépendances (requests, beautifulsoup4)
+      - name: Installation des dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      # 4. Exécuter le script de mise à jour
+      - name: Lancement du script Python
+        run: |
+          python scripts/update_unrivaled.py
+
+      # 5. Commit et Push automatiques si le fichier ICS a changé
+      - name: Validation et envoi des modifications
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 [Bot] Mise à jour automatique du calendrier Unrivaled (.ics)"
+          file_pattern: "data/unrivaled_schedule.ics"
