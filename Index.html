@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrenchiesWBB - Suivi des Joueuses</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darker: '#090d16',
+                        card: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darker text-slate-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- En-tête -->
+        <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight text-white">FrenchiesWBB 🏀</h1>
+                <p class="text-slate-400 text-sm mt-1">Suivi des joueuses françaises (WNBA, Unrivaled, Project B, Europe)</p>
+            </div>
+            <div id="counter" class="bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-full w-fit">
+                Chargement...
+            </div>
+        </header>
+
+        <!-- Barre de recherche -->
+        <div class="mb-6">
+            <input 
+                type="text" 
+                id="searchBar" 
+                placeholder="Rechercher par nom (ex: Marine, Gabby, Malonga...)" 
+                class="w-full bg-card border border-slate-800 text-white placeholder-slate-500 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition-colors shadow-inner"
+            >
+        </div>
+
+        <!-- Grille / Liste des joueuses -->
+        <div id="playersGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Injecté dynamiquement par JavaScript -->
+        </div>
+    </div>
+
+    <!-- Script de chargement et d'affichage du JSON -->
+    <script>
+        let allPlayers = [];
+
+        async function loadPlayers() {
+            try {
+                // Charge le fichier JSON depuis le dossier data
+                const response = await fetch('./data/joueuses.json');
+                if (!response.ok) throw new Error("Impossible de charger le fichier JSON");
+                
+                const data = await response.json();
+                allPlayers = data.players;
+                
+                displayPlayers(allPlayers);
+            } catch (error) {
+                console.error("Erreur:", error);
+                document.getElementById('playersGrid').innerHTML = `
+                    <div class="col-span-2 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-center text-sm">
+                        Erreur de chargement du fichier <code class="bg-red-500/20 px-1 py-0.5 rounded">data/joueuses.json</code>. 
+                        Assurez-vous de lancer un serveur local (Live Server sur VS Code par exemple) car les navigateurs bloquent fetch() en local direct (file://).
+                    </div>
+                `;
+                document.getElementById('counter').innerText = "0 joueuse";
+            }
+        }
+
+        function displayPlayers(players) {
+            const grid = document.getElementById('playersGrid');
+            const counter = document.getElementById('counter');
+            
+            counter.innerText = `${players.length} joueuse${players.length > 1 ? 's' : ''} affichée${players.length > 1 ? 's' : ''}`;
+            
+            if (players.length === 0) {
+                grid.innerHTML = `<p class="col-span-2 text-center text-slate-500 py-8">Aucune joueuse ne correspond à votre recherche.</p>`;
+                return;
+            }
+
+            grid.innerHTML = players.map(player => {
+                const initials = `${player.first_name[0]}${player.last_name[0]}`;
+                const clubs = player.clubs || {};
+
+                // Génération dynamique des badges de ligues
+                let badgesHTML = '';
+                
+                if (clubs.wnba_franchise) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/20 text-orange-400 border border-orange-500/30">WNBA: ${clubs.wnba_franchise}</span>`;
+                }
+                if (clubs.unrivaled_league) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">UNRIVALED: ${clubs.unrivaled_league}</span>`;
+                }
+                if (clubs.project_b_league) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PROJ-B: ${clubs.project_b_league}</span>`;
+                }
+                if (clubs.european_club) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">EU: ${clubs.european_club}</span>`;
+                }
+
+                return `
+                    <div class="bg-card border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-lg">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-11 h-11 rounded-full bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 font-bold text-sm">
+                                    ${initials}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-white text-base">${player.first_name} ${player.last_name}</h3>
+                                    <p class="text-slate-400 text-xs">Poste : ${player.positions.join(' / ')}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mt-2 pt-3 border-t border-slate-800/60">
+                            ${badgesHTML || '<span class="text-slate-500 text-xs italic">Aucun engagement actif</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Logique de recherche en temps réel
+        document.getElementById('searchBar').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allPlayers.filter(p => 
+                `${p.first_name} ${p.last_name}`.toLowerCase().includes(query)
+            );
+            displayPlayers(filtered);
+        });
+
+        // Charger les données au démarrage
+        loadPlayers();
+    </script>
+</body>
+</html>
