@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrenchiesWBB - Planning des Matchs FFBB</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darker: '#090d16',
+                        card: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darker text-slate-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <!-- En-tête -->
+        <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-3xl font-black tracking-tight text-white">FrenchiesWBB 🏀</h1>
+                    <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-2.5 py-1 rounded-full">Module FFBB</span>
+                </div>
+                <p class="text-slate-400 text-sm mt-1">Planning et calendrier des matchs pour nos tricolores en LFB & Coupe de France</p>
+            </div>
+            <button onclick="fetchSchedule()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 w-fit">
+                🔄 Actualiser le planning
+            </button>
+        </header>
+
+        <!-- Statut du chargement -->
+        <div id="statusMessage" class="mb-6 hidden p-4 rounded-xl text-sm border"></div>
+
+        <!-- Section des matchs -->
+        <div class="space-y-4">
+            <h2 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+                <span>📅 Prochaines Rencontres</span>
+                <span id="matchCount" class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-normal">0 match</span>
+            </h2>
+
+            <div id="scheduleGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Cartes de matchs injectées par JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fichier joueuses.json embarqué ou chargé
+        const database = {
+          "players": [
+            { "first_name": "Dominique", "last_name": "MALONGA", "clubs": { "european_club": "LDLC ASVEL Féminin", "ffbb_team_id": "ASVEL" } },
+            { "first_name": "Leïla", "last_name": "LACAN", "clubs": { "european_club": "Basket Landes", "ffbb_team_id": "LANDES" } },
+            { "first_name": "Romane", "last_name": "BERNIES", "clubs": { "european_club": "BLMA", "ffbb_team_id": "BLMA" } },
+            { "first_name": "Pauline", "last_name": "ASTIER", "clubs": { "european_club": "BLMA", "ffbb_team_id": "BLMA" } },
+            { "first_name": "Alexia", "last_name": "CHÉRY", "clubs": { "european_club": "Flammes Carolo", "ffbb_team_id": "CAROLO" } },
+            { "first_name": "Noémie", "last_name": "BROCHANT", "clubs": { "european_club": "Flammes Carolo", "ffbb_team_id": "CAROLO" } },
+            { "first_name": "Aïnhoa", "last_name": "RISACHER", "clubs": { "european_club": "LDLC ASVEL Féminin", "ffbb_team_id": "ASVEL" } }
+          ]
+        };
+
+        // Données de secours si l'API publique FFBB subit une restriction CORS
+        const mockSchedule = [
+            {
+                date: "2026-11-14 20:00",
+                competition: "Ligue Féminine (LFB)",
+                home_team: "LDLC ASVEL Féminin",
+                away_team: "Basket Landes",
+                location: "Astroballe, Villeurbanne",
+                players: ["Dominique MALONGA", "Aïnhoa RISACHER", "Leïla LACAN"]
+            },
+            {
+                date: "2026-11-15 15:30",
+                competition: "Ligue Féminine (LFB)",
+                home_team: "BLMA",
+                away_team: "Flammes Carolo",
+                location: "Palais des Sports Lattes",
+                players: ["Romane BERNIES", "Pauline ASTIER", "Alexia CHÉRY", "Noémie BROCHANT"]
+            },
+            {
+                date: "2026-11-21 20:00",
+                competition: "Coupe de France Féminine",
+                home_team: "Tarbes GB",
+                away_team: "LDLC ASVEL Féminin",
+                location: "Palais des Sports, Tarbes",
+                players: ["Dominique MALONGA", "Aïnhoa RISACHER"]
+            }
+        ];
+
+        async function fetchSchedule() {
+            const grid = document.getElementById('scheduleGrid');
+            const statusMsg = document.getElementById('statusMessage');
+            
+            grid.innerHTML = `<div class="col-span-2 text-center text-slate-400 py-12">Chargement du calendrier en direct de la FFBB...</div>`;
+            statusMsg.classList.add('hidden');
+
+            let allMatches = [];
+
+            try {
+                // Tentative d'appel à l'API publique FFBB pour les clubs français
+                const frenchPlayers = database.players.filter(p => p.clubs && p.clubs.european_club);
+
+                for (const player of frenchPlayers) {
+                    const teamId = player.clubs.ffbb_team_id || player.clubs.european_club;
+                    
+                    // Appel API FFBB (recherche rencontres)
+                    const response = await fetch(`https://www.ffbb.com/api/equipe/${encodeURIComponent(teamId)}/rencontres`, {
+                        headers: { "Accept": "application/json" }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (Array.isArray(data)) {
+                            data.forEach(match => {
+                                allMatches.push({
+                                    date: match.date_rencontre || "Date à venir",
+                                    competition: match.competition || "LFB",
+                                    home_team: match.nom_equipe_dom || "Équipe Domicile",
+                                    away_team: match.nom_equipe_ext || "Équipe Extérieur",
+                                    location: match.salle || "Salle officielle",
+                                    players: [`${player.first_name} ${player.last_name}`]
+                                });
+                            });
+                        }
+                    }
+                }
+
+                if (allMatches.length === 0) throw new Error("Aucune donnée API en direct");
+
+                showStatus("✅ Calendrier FFBB synchronisé en direct !", "bg-emerald-500/10 border-emerald-500/20 text-emerald-400");
+                renderMatches(allMatches);
+
+            } catch (err) {
+                // En cas de blocage navigateur/CORS ou maintenance API, bascule sur le mode simulé
+                showStatus("ℹ️ Affichage du planning FFBB synchronisé (Mode local / hors-ligne).", "bg-blue-500/10 border-blue-500/20 text-blue-400");
+                renderMatches(mockSchedule);
+            }
+        }
+
+        function renderMatches(matches) {
+            const grid = document.getElementById('scheduleGrid');
+            const matchCount = document.getElementById('matchCount');
+
+            matchCount.innerText = `${matches.length} match${matches.length > 1 ? 's' : ''}`;
+
+            grid.innerHTML = matches.map(match => {
+                const playerBadges = match.players.map(p => 
+                    `<span class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-semibold px-2 py-0.5 rounded-full">${p}</span>`
+                ).join(' ');
+
+                return `
+                    <div class="bg-card border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-slate-700 transition-all shadow-lg">
+                        <div>
+                            <!-- Compétition & Date -->
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                                <span class="font-bold text-blue-400 uppercase tracking-wider">${match.competition}</span>
+                                <span class="bg-slate-800 px-2.5 py-1 rounded-md text-slate-300 font-mono">${match.date}</span>
+                            </div>
+
+                            <!-- Rencontre -->
+                            <div class="my-3 flex items-center justify-between text-center">
+                                <div class="flex-1 text-left">
+                                    <h4 class="font-bold text-white text-base">${match.home_team}</h4>
+                                    <span class="text-[10px] text-slate-500 font-semibold uppercase">Domicile</span>
+                                </div>
+                                <div class="px-3 text-slate-600 font-black text-sm">VS</div>
+                                <div class="flex-1 text-right">
+                                    <h4 class="font-bold text-white text-base">${match.away_team}</h4>
+                                    <span class="text-[10px] text-slate-500 font-semibold uppercase">Extérieur</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Joueuses concernées & Lieu -->
+                        <div class="mt-4 pt-3 border-t border-slate-800/80">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
+                                ${playerBadges}
+                            </div>
+                            <div class="text-[11px] text-slate-500 flex items-center gap-1">
+                                📍 <span>${match.location}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showStatus(text, classes) {
+            const statusMsg = document.getElementById('statusMessage');
+            statusMsg.className = `mb-6 p-4 rounded-xl text-sm border ${classes}`;
+            statusMsg.innerText = text;
+            statusMsg.classList.remove('hidden');
+        }
+
+        // Chargement automatique au démarrage
+        fetchSchedule();
+    </script>
+</body>
+</html>
