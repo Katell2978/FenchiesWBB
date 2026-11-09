@@ -1,0 +1,61 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//FrenchiesWBB//Unrivaled Sync Worker//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Unrivaled WBB 2027 (FrenchiesWBB)
+BEGIN:VEVENT
+UID:unr-2027-0108-1
+DTSTAMP:20261109T205905Z
+DTSTART:20270108T220000Z
+DTEND:20270109T000000Z
+SUMMARY:Unrivaled: Hive vs Laces BC
+DESCRIPTION:Tour stop Los Angeles - Intuit Dome, Inglewood, CA. Avec Gabby Williams & Marine Johannès.
+LOCATION:Intuit Dome, Inglewood, CA
+END:VEVENT
+BEGIN:VEVENT
+UID:unr-2027-0111-1
+DTSTAMP:20261109T205905Z
+DTSTART:20270111T210000Z
+DTEND:20270111T230000Z
+SUMMARY:Unrivaled: Mist vs Breeze BC
+DESCRIPTION:Tour stop Detroit - Little Caesars Arena, Detroit, MI. Avec Dominique Malonga.
+LOCATION:Little Caesars Arena, Detroit, MI
+END:VEVENT
+BEGIN:VEVENT
+UID:unr-2027-0111-2
+DTSTAMP:20261109T205905Z
+DTSTART:20270111T233000Z
+DTEND:20270112T013000Z
+SUMMARY:Unrivaled: Laces BC vs Lunar Owls
+DESCRIPTION:Tour stop San Francisco - Chase Center, San Francisco, CA. Avec Gabby Williams & Marine Johannès.
+LOCATION:Chase Center, San Francisco, CA
+END:VEVENT
+BEGIN:VEVENT
+UID:unr-2027-0120-1
+DTSTAMP:20261109T205905Z
+DTSTART:20270120T230000Z
+DTEND:20270121T010000Z
+SUMMARY:Unrivaled: Rose vs Laces & Breeze vs Phantom
+DESCRIPTION:Sephora Arena, Miami, FL. Matchs avec nos Françaises.
+LOCATION:Sephora Arena, Miami, FL
+END:VEVENT
+BEGIN:VEVENT
+UID:unr-2027-0201-1
+DTSTAMP:20261109T205905Z
+DTSTART:20270201T223000Z
+DTEND:20270202T003000Z
+SUMMARY:Unrivaled: Laces BC vs Breeze BC
+DESCRIPTION:Sephora Arena, Miami, FL. Première confrontation Laces vs Breeze !
+LOCATION:Sephora Arena, Miami, FL
+END:VEVENT
+BEGIN:VEVENT
+UID:unr-2027-0215-choc
+DTSTAMP:20261109T205905Z
+DTSTART:20270215T230000Z
+DTEND:20270216T010000Z
+SUMMARY:🔥 Unrivaled: Breeze BC vs Laces BC (Choc Français !)
+DESCRIPTION:Tour stop Philly - Xfinity Mobile Arena, Philadelphia, PA. Duel direct entre Gabby Williams, Marine Johannès et Dominique Malonga !
+LOCATION:Xfinity Mobile Arena, Philadelphia, PA
+END:VEVENT
+END:VCALENDAR
