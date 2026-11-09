@@ -1,0 +1,280 @@
+{
+  "project": "FrenchiesWBB",
+  "updated_at": "2026-11-09",
+  "context": "Roster actualisé - Équipe de France & Engagements Multi-Ligues (WNBA, Unrivaled, Project B)",
+  "players_count": 16,
+  "players": [
+    {
+      "first_name": "Gabby",
+      "last_name": "WILLIAMS",
+      "birth_date": "1996-09-09",
+      "positions": ["3", "4"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": false,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Golden State Valkyries",
+        "unrivaled_league": "Laces BC",
+        "project_b_league": null,
+        "european_club": null
+      }
+    },
+    {
+      "first_name": "Marine",
+      "last_name": "JOHANNÈS",
+      "birth_date": "1995-01-21",
+      "positions": ["2"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "New York Liberty",
+        "unrivaled_league": "Laces BC",
+        "project_b_league": null,
+        "european_club": null
+      }
+    },
+    {
+      "first_name": "Dominique",
+      "last_name": "MALONGA",
+      "birth_date": "2005-11-16",
+      "positions": ["5"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Seattle Storm",
+        "unrivaled_league": "Breeze BC",
+        "project_b_league": null,
+        "european_club": "LDLC ASVEL Féminin"
+      }
+    },
+    {
+      "first_name": "Janelle",
+      "last_name": "SALAÜN",
+      "birth_date": "2001-09-05",
+      "positions": ["3", "4"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Golden State Valkyries",
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "USK Prague"
+      }
+    },
+    {
+      "first_name": "Valériane",
+      "last_name": "AYAYI",
+      "birth_date": "1994-04-29",
+      "positions": ["3"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "New York Liberty",
+        "unrivaled_league": null,
+        "project_b_league": "Project B League",
+        "european_club": "USK Prague"
+      }
+    },
+    {
+      "first_name": "Carla",
+      "last_name": "LEITE",
+      "birth_date": "2004-04-16",
+      "positions": ["1"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Portland Fire",
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Saragosse"
+      }
+    },
+    {
+      "first_name": "Leïla",
+      "last_name": "LACAN",
+      "birth_date": "2004-06-02",
+      "positions": ["1", "2"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Connecticut Sun",
+        "unrivaled_league": null,
+        "project_b_league": "Project B League",
+        "european_club": "Basket Landes"
+      }
+    },
+    {
+      "first_name": "Marième",
+      "last_name": "BADIANE",
+      "birth_date": "1994-11-24",
+      "positions": ["4", "5"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Phoenix Mercury",
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Famila Schio"
+      }
+    },
+    {
+      "first_name": "Iliana",
+      "last_name": "RUPERT",
+      "birth_date": "2001-07-12",
+      "positions": ["4", "5"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Atlanta Dream",
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "USK Prague"
+      }
+    },
+    {
+      "first_name": "Marine",
+      "last_name": "FAUTHOUX",
+      "birth_date": "2001-01-23",
+      "positions": ["1"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": null,
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Çukurova Basketbol"
+      }
+    },
+    {
+      "first_name": "Romane",
+      "last_name": "BERNIES",
+      "birth_date": "1993-06-27",
+      "positions": ["1"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": null,
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "BLMA"
+      }
+    },
+    {
+      "first_name": "Alexia",
+      "last_name": "CHÉRY",
+      "birth_date": "1998-09-05",
+      "positions": ["4"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Phoenix Mercury",
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Flammes Carolo"
+      }
+    },
+    {
+      "first_name": "Mamignan",
+      "last_name": "TOURÉ",
+      "birth_date": "1994-11-04",
+      "positions": ["2", "3"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": null,
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Besiktas"
+      }
+    },
+    {
+      "first_name": "Pauline",
+      "last_name": "ASTIER",
+      "birth_date": "2002-02-15",
+      "positions": ["1", "2"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": "Connecticut Sun",
+        "unrivaled_link": null,
+        "project_b_league": null,
+        "european_club": "BLMA"
+      }
+    },
+    {
+      "first_name": "Noémie",
+      "last_name": "BROCHANT",
+      "birth_date": "1999-10-25",
+      "positions": ["2", "3"],
+      "selections": {
+        "senior_team": true,
+        "u20_team": true,
+        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+      },
+      "clubs": {
+        "wnba_franchise": null,
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "Flammes Carolo"
+      }
+    },
+    {
+      "first_name": "Aïnhoa",
+      "last_name": "RISACHER",
+      "birth_date": "2007-07-13",
+      "positions": ["1", "2"],
+      "selections": {
+        "senior_team": false,
+        "u20_team": true,
+        "competitions": ["Youth / Pro Prospects"]
+      },
+      "clubs": {
+        "wnba_franchise": null,
+        "unrivaled_league": null,
+        "project_b_league": null,
+        "european_club": "LDLC ASVEL Féminin"
+      }
+    }
+  ]
+}
