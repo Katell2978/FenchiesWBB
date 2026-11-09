@@ -52,7 +52,7 @@
         "wnba_franchise": "Seattle Storm",
         "unrivaled_league": "Breeze BC",
         "project_b_league": null,
-        "european_club": "LDLC ASVEL Féminin"
+        "european_club": null
       }
     },
     {
@@ -83,7 +83,7 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": "New York Liberty",
+        "wnba_franchise": "Phoenix Mercury",
         "unrivaled_league": null,
         "project_b_league": "Project B League",
         "european_club": "USK Prague"
@@ -103,7 +103,7 @@
         "wnba_franchise": "Portland Fire",
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": "Saragosse"
+        "european_club": "Mersin"
       }
     },
     {
@@ -120,7 +120,7 @@
         "wnba_franchise": "Connecticut Sun",
         "unrivaled_league": null,
         "project_b_league": "Project B League",
-        "european_club": "Basket Landes"
+        "european_club": "Fenerbahce SK"
       }
     },
     {
@@ -151,10 +151,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": "Atlanta Dream",
+        "wnba_franchise": "Golden State Valkyries",
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": "USK Prague"
+        "european_club": "Fenerbahce Istanbul"
       }
     },
     {
