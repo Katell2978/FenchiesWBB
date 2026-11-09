@@ -14,7 +14,7 @@ def fetch_schedule_page():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7"
     }
-    print(accessor_msg := f"🌐 Connexion à {TARGET_URL}...")
+    print(f"🌐 Connexion à {TARGET_URL}...")
     try:
         response = requests.get(TARGET_URL, headers=headers, timeout=15)
         response.raise_for_status()
@@ -25,15 +25,11 @@ def fetch_schedule_page():
 
 def parse_and_generate_ics(html_content):
     """
-    Analyse le contenu (ou s'appuie sur la structure validée de la saison 3) 
-    et génère / met à jour le fichier .ics des matchs d'Unrivaled.
+    Analyse le contenu et génère / met à jour le fichier .ics des matchs d'Unrivaled.
     """
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    soup = BeautifulSoup(html_content, 'html.parser') if html_content else None
-    
     # Base de données de référence des matchs clés (Laces BC & Breeze BC avec nos Françaises)
-    # Dans une logique de scraping avancée, ces dictionnaires peuvent être extraits dynamiquement du DOM BeautifulSoup.
     matches_db = [
         {
             "uid": "unr-2027-0108-1",
@@ -89,18 +85,19 @@ def parse_and_generate_ics(html_content):
         "X-WR-CALNAME:Unrivaled WBB 2027 (FrenchiesWBB)"
     ]
 
-    timestamp_str = datetime.utcnow().strftime('%Y%mdT%H%M%SZ')
+    timestamp_str = datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
 
     for match in matches_db:
-        start_dt = datetime.strptime(match["start"], '%Y%mdT%H%M%SZ')
-        end_dt = start_dt + timedelta(hours=2) # Durée estimée d'un match de 3x3 avec avant-match
+        # Correction du format de date (%Y%m%dT... au lieu de %Y%mdT...)
+        start_dt = datetime.strptime(match["start"], '%Y%m%dT%H%M%SZ')
+        end_dt = start_dt + timedelta(hours=2) # Durée estimée d'un match
         
         ics_lines.extend([
             "BEGIN:VEVENT",
             f"UID:{match['uid']}",
             f"DTSTAMP:{timestamp_str}",
             f"DTSTART:{match['start']}",
-            f"DTEND:{end_dt.strftime('%Y%mdT%H%M%SZ')}",
+            f"DTEND:{end_dt.strftime('%Y%m%dT%H%M%SZ')}",
             f"SUMMARY:{match['summary']}",
             f"DESCRIPTION:{match['description']}",
             f"LOCATION:{match['location']}",
