@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrenchiesWBB - Planning & Matchs en Direct</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darker: '#090d16',
+                        card: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darker text-slate-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- En-tête -->
+        <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-6">
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-3xl font-black tracking-tight text-white">FrenchiesWBB 🏀</h1>
+                    <span class="bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold px-3 py-1 rounded-full">Planning Officiel</span>
+                </div>
+                <p class="text-slate-400 text-sm mt-1">Calendrier combiné : Équipe de France, LFB, WNBA, Unrivaled & Europe</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs text-slate-400 font-medium">Mise à jour en temps réel</span>
+            </div>
+        </header>
+
+        <!-- Liste des Matchs -->
+        <div id="matchesContainer" class="space-y-4">
+            <!-- Injecté par JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Base de données combinée des matchs à venir incluant l'Équipe de France et les clubs
+        const scheduleData = [
+            {
+                id: 1,
+                date: "Mercredi 11 Novembre 2026",
+                time: "20:45",
+                competition: "Équipe de France Féminine - Qualifications EuroBasket",
+                home_team: "France 🇫🇷",
+                away_team: "Italie 🇮🇹",
+                location: "Accor Arena, Paris",
+                is_national_team: true,
+                roster: [
+                    "Gabby WILLIAMS (Laces BC / WNBA)",
+                    "Marine JOHANNÈS (New York Liberty / Laces BC)",
+                    "Dominique MALONGA (LDLC ASVEL / Seattle Storm)",
+                    "Valériane AYAYI (USK Prague / Project B)",
+                    "Leïla LACAN (Basket Landes / Connecticut Sun)",
+                    "Iliana RUPERT (USK Prague / Atlanta Dream)"
+                ]
+            },
+            {
+                id: 2,
+                date: "Vendredi 13 Novembre 2026",
+                time: "20:00",
+                competition: "Ligue Féminine de Basketball (LFB)",
+                home_team: "LDLC ASVEL Féminin",
+                away_team: "Basket Landes",
+                location: "Astroballe, Villeurbanne",
+                is_national_team: false,
+                teams_players: {
+                    "LDLC ASVEL Féminin": ["Dominique MALONGA", "Aïnhoa RISACHER"],
+                    "Basket Landes": ["Leïla LACAN"]
+                }
+            },
+            {
+                id: 3,
+                date: "Samedi 14 Novembre 2026",
+                time: "18:30",
+                competition: "Ligue Féminine de Basketball (LFB)",
+                home_team: "BLMA (Lattes Montpellier)",
+                away_team: "Flammes Carolo",
+                location: "Palais des Sports de Lattes",
+                is_national_team: false,
+                teams_players: {
+                    "BLMA (Lattes Montpellier)": ["Romane BERNIES", "Pauline ASTIER"],
+                    "Flammes Carolo": ["Alexia CHÉRY", "Noémie BROCHANT"]
+                }
+            }
+        ];
+
+        function renderSchedule() {
+            const container = document.getElementById('matchesContainer');
+
+            container.innerHTML = scheduleData.map(match => {
+                let detailsHTML = '';
+
+                if (match.is_national_team) {
+                    // Affichage spécial Équipe de France avec tout le roster convoqué
+                    const rosterBadges = match.roster.map(p => 
+                        `<span class="bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs px-2.5 py-1 rounded-lg font-medium">🏀 ${p}</span>`
+                    ).join('');
+
+                    detailsHTML = `
+                        <div class="mt-4 pt-3 border-t border-slate-800/80">
+                            <p class="text-xs text-slate-400 font-semibold mb-2">Joueuses françaises engagées (Roster Équipe de France) :</p>
+                            <div class="flex flex-wrap gap-2">
+                                ${rosterBadges}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Affichage par club pour les matchs de championnat
+                    const homeTeamName = match.home_team;
+                    const awayTeamName = match.away_team;
+                    const homePlayers = match.teams_players[homeTeamName] || [];
+                    const awayPlayers = match.teams_players[awayTeamName] || [];
+
+                    detailsHTML = `
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/50">
+                                <span class="text-slate-400 font-bold block mb-1">🏠 ${homeTeamName} :</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${homePlayers.length > 0 ? homePlayers.map(p => `<span class="bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded border border-blue-500/20">${p}</span>`).join('') : '<span class="text-slate-500 italic">Aucune joueuse suivie</span>'}
+                                </div>
+                            </div>
+                            <div class="bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/50">
+                                <span class="text-slate-400 font-bold block mb-1">✈️ ${awayTeamName} :</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${awayPlayers.length > 0 ? awayPlayers.map(p => `<span class="bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded border border-purple-500/20">${p}</span>`).join('') : '<span class="text-slate-500 italic">Aucune joueuse suivie</span>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Style distinctif si c'est l'Équipe de France
+                const cardBorder = match.is_national_team ? 'border-indigo-500/50 bg-gradient-to-r from-indigo-950/20 to-card' : 'border-slate-800 bg-card';
+
+                return `
+                    <div class="${cardBorder} border rounded-2xl p-5 shadow-xl transition-all hover:border-slate-700">
+                        <!-- En-tête de carte : Date & Heure XXL + Compétition -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800/60">
+                            <div>
+                                <span class="text-[11px] font-extrabold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-md border border-indigo-500/20">
+                                    ${match.competition}
+                                </span>
+                            </div>
+                            <!-- Date et Heure mises en valeur -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-black text-white tracking-tight">📅 ${match.date}</span>
+                                <span class="text-xs font-bold bg-slate-800 text-amber-400 px-2.5 py-1 rounded-lg border border-slate-700">🕒 ${match.time}</span>
+                            </div>
+                        </div>
+
+                        <!-- Affichage des équipes / Match -->
+                        <div class="flex items-center justify-between py-2 text-center">
+                            <div class="flex-1 text-left">
+                                <h3 class="font-extrabold text-white text-lg md:text-xl">${match.home_team}</h3>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Domicile</span>
+                            </div>
+                            <div class="px-4">
+                                <span class="text-slate-600 font-black text-xl italic">VS</span>
+                            </div>
+                            <div class="flex-1 text-right">
+                                <h3 class="font-extrabold text-white text-lg md:text-xl">${match.away_team}</h3>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Extérieur</span>
+                            </div>
+                        </div>
+
+                        <!-- Localisation -->
+                        <div class="text-xs text-slate-400 mt-2 flex items-center gap-1.5">
+                            📍 <span class="font-medium">${match.location}</span>
+                        </div>
+
+                        <!-- Joueuses associées -->
+                        ${detailsHTML}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Lancement de l'affichage
+        renderSchedule();
+    </script>
+</body>
+</html>
