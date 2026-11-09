@@ -12,7 +12,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": false,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
         "wnba_franchise": "Golden State Valkyries",
@@ -29,7 +29,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
         "wnba_franchise": "New York Liberty",
@@ -46,7 +46,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
         "wnba_franchise": "Seattle Storm",
@@ -63,7 +63,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
         "wnba_franchise": "Golden State Valkyries",
@@ -114,7 +114,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
         "wnba_franchise": "Connecticut Sun",
@@ -168,7 +168,7 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": null,
+        "wnba_franchise": New York Liberty,
         "unrivaled_league": null,
         "project_b_league": null,
         "european_club": "Çukurova Basketbol"
@@ -182,7 +182,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup""]
       },
       "clubs": {
         "wnba_franchise": null,
@@ -199,7 +199,7 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": [null]
       },
       "clubs": {
         "wnba_franchise": "Phoenix Mercury",
@@ -233,13 +233,13 @@
       "selections": {
         "senior_team": true,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
+        "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": "Connecticut Sun",
+        "wnba_franchise": "New York Liberty",
         "unrivaled_link": null,
         "project_b_league": null,
-        "european_club": "BLMA"
+        "european_club": "Prague"
       }
     },
     {
