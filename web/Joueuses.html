@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrenchiesWBB - Suivi des Joueuses</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darker: '#090d16',
+                        card: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darker text-slate-100 min-h-screen font-sans antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- En-tête -->
+        <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight text-white">FrenchiesWBB 🏀</h1>
+                <p class="text-slate-400 text-sm mt-1">Suivi des joueuses françaises (WNBA, Unrivaled, Project B, Europe)</p>
+            </div>
+            <div id="counter" class="bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-full w-fit">
+                Chargement...
+            </div>
+        </header>
+
+        <!-- Barre de recherche -->
+        <div class="mb-6">
+            <input 
+                type="text" 
+                id="searchBar" 
+                placeholder="Rechercher par nom (ex: Marine, Gabby, Malonga...)" 
+                class="w-full bg-card border border-slate-800 text-white placeholder-slate-500 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition-colors shadow-inner"
+            >
+        </div>
+
+        <!-- Grille / Liste des joueuses -->
+        <div id="playersGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Injecté dynamiquement par JavaScript -->
+        </div>
+    </div>
+
+    <!-- Script de données et d'affichage -->
+    <script>
+        // Données JSON chargées manuellement en dur
+        const database = {
+          "project": "FrenchiesWBB",
+          "updated_at": "2026-11-09",
+          "players": [
+            {
+              "first_name": "Gabby",
+              "last_name": "WILLIAMS",
+              "birth_date": "1996-09-09",
+              "positions": ["3", "4"],
+              "selections": { "senior_team": true, "u20_team": false, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Golden State Valkyries", "unrivaled_league": "Laces BC", "project_b_league": null, "european_club": null }
+            },
+            {
+              "first_name": "Marine",
+              "last_name": "JOHANNÈS",
+              "birth_date": "1995-01-21",
+              "positions": ["2"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "New York Liberty", "unrivaled_league": "Laces BC", "project_b_league": null, "european_club": null }
+            },
+            {
+              "first_name": "Dominique",
+              "last_name": "MALONGA",
+              "birth_date": "2005-11-16",
+              "positions": ["5"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Seattle Storm", "unrivaled_league": "Breeze BC", "project_b_league": null, "european_club": "LDLC ASVEL Féminin" }
+            },
+            {
+              "first_name": "Janelle",
+              "last_name": "SALAÜN",
+              "birth_date": "2001-09-05",
+              "positions": ["3", "4"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Golden State Valkyries", "unrivaled_league": null, "project_b_league": null, "european_club": "USK Prague" }
+            },
+            {
+              "first_name": "Valériane",
+              "last_name": "AYAYI",
+              "birth_date": "1994-04-29",
+              "positions": ["3"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "New York Liberty", "unrivaled_league": null, "project_b_league": "Project B League", "european_club": "USK Prague" }
+            },
+            {
+              "first_name": "Carla",
+              "last_name": "LEITE",
+              "birth_date": "2004-04-16",
+              "positions": ["1"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Portland Fire", "unrivaled_league": null, "project_b_league": null, "european_club": "Saragosse" }
+            },
+            {
+              "first_name": "Leïla",
+              "last_name": "LACAN",
+              "birth_date": "2004-06-02",
+              "positions": ["1", "2"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Connecticut Sun", "unrivaled_league": null, "project_b_league": "Project B League", "european_club": "Basket Landes" }
+            },
+            {
+              "first_name": "Marième",
+              "last_name": "BADIANE",
+              "birth_date": "1994-11-24",
+              "positions": ["4", "5"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Phoenix Mercury", "unrivaled_league": null, "project_b_league": null, "european_club": "Famila Schio" }
+            },
+            {
+              "first_name": "Iliana",
+              "last_name": "RUPERT",
+              "birth_date": "2001-07-12",
+              "positions": ["4", "5"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Atlanta Dream", "unrivaled_league": null, "project_b_league": null, "european_club": "USK Prague" }
+            },
+            {
+              "first_name": "Marine",
+              "last_name": "FAUTHOUX",
+              "birth_date": "2001-01-23",
+              "positions": ["1"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": null, "unrivaled_league": null, "project_b_league": null, "european_club": "Çukurova Basketbol" }
+            },
+            {
+              "first_name": "Romane",
+              "last_name": "BERNIES",
+              "birth_date": "1993-06-27",
+              "positions": ["1"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": null, "unrivaled_league": null, "project_b_league": null, "european_club": "BLMA" }
+            },
+            {
+              "first_name": "Alexia",
+              "last_name": "CHÉRY",
+              "birth_date": "1998-09-05",
+              "positions": ["4"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Phoenix Mercury", "unrivaled_league": null, "project_b_league": null, "european_club": "Flammes Carolo" }
+            },
+            {
+              "first_name": "Mamignan",
+              "last_name": "TOURÉ",
+              "birth_date": "1994-11-04",
+              "positions": ["2", "3"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": null, "unrivaled_league": null, "project_b_league": null, "european_club": "Besiktas" }
+            },
+            {
+              "first_name": "Pauline",
+              "last_name": "ASTIER",
+              "birth_date": "2002-02-15",
+              "positions": ["1", "2"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": "Connecticut Sun", "unrivaled_league": null, "project_b_league": null, "european_club": "BLMA" }
+            },
+            {
+              "first_name": "Noémie",
+              "last_name": "BROCHANT",
+              "birth_date": "1999-10-25",
+              "positions": ["2", "3"],
+              "selections": { "senior_team": true, "u20_team": true, "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"] },
+              "clubs": { "wnba_franchise": null, "unrivaled_league": null, "project_b_league": null, "european_club": "Flammes Carolo" }
+            },
+            {
+              "first_name": "Aïnhoa",
+              "last_name": "RISACHER",
+              "birth_date": "2007-07-13",
+              "positions": ["1", "2"],
+              "selections": { "senior_team": false, "u20_team": true, "competitions": ["Youth / Pro Prospects"] },
+              "clubs": { "wnba_franchise": null, "unrivaled_league": null, "project_b_league": null, "european_club": "LDLC ASVEL Féminin" }
+            }
+          ]
+        };
+
+        const allPlayers = database.players;
+
+        function displayPlayers(players) {
+            const grid = document.getElementById('playersGrid');
+            const counter = document.getElementById('counter');
+            
+            counter.innerText = `${players.length} joueuse${players.length > 1 ? 's' : ''} affichée${players.length > 1 ? 's' : ''}`;
+            
+            if (players.length === 0) {
+                grid.innerHTML = `<p class="col-span-2 text-center text-slate-500 py-8">Aucune joueuse ne correspond à votre recherche.</p>`;
+                return;
+            }
+
+            grid.innerHTML = players.map(player => {
+                const initials = `${player.first_name[0]}${player.last_name[0]}`;
+                const clubs = player.clubs || {};
+
+                let badgesHTML = '';
+                
+                if (clubs.wnba_franchise) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/20 text-orange-400 border border-orange-500/35">WNBA: ${clubs.wnba_franchise}</span>`;
+                }
+                if (clubs.unrivaled_league) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/35">UNRIVALED: ${clubs.unrivaled_league}</span>`;
+                }
+                if (clubs.project_b_league) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/35">PROJ-B: ${clubs.project_b_league}</span>`;
+                }
+                if (clubs.european_club) {
+                    badgesHTML += `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/35">EU: ${clubs.european_club}</span>`;
+                }
+
+                return `
+                    <div class="bg-card border border-slate-800/80 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-lg">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-11 h-11 rounded-full bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 font-bold text-sm">
+                                    ${initials}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-white text-base">${player.first_name} ${player.last_name}</h3>
+                                    <p class="text-slate-400 text-xs">Poste : ${player.positions.join(' / ')}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mt-2 pt-3 border-t border-slate-800/60">
+                            ${badgesHTML || '<span class="text-slate-500 text-xs italic">Aucun engagement actif</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Recherche en temps réel
+        document.getElementById('searchBar').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allPlayers.filter(p => 
+                `${p.first_name} ${p.last_name}`.toLowerCase().includes(query)
+            );
+            displayPlayers(filtered);
+        });
+
+        // Affichage initial au chargement de la page
+        displayPlayers(allPlayers);
+    </script>
+</body>
+</html>
