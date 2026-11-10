@@ -1,7 +1,7 @@
 {
   "project": "FrenchiesWBB",
   "updated_at": "2026-11-10",
-  "context": "Roster actualisé avec IDs API-Sports intégrés",
+  "context": "Roster actualisé avec team_id et league_id pour API-Sports",
   "players_count": 16,
   "players": [
     {
@@ -15,8 +15,8 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393 },
-        "unrivaled_league": { "name": "Laces BC", "team_id": null },
+        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393, "league_id": 12 },
+        "unrivaled_league": { "name": "Laces BC", "team_id": null, "league_id": null },
         "project_b_league": null,
         "european_club": null
       }
@@ -32,8 +32,8 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "New York Liberty", "team_id": 182 },
-        "unrivaled_league": { "name": "Laces BC", "team_id": null },
+        "wnba_franchise": { "name": "New York Liberty", "team_id": 182, "league_id": 12 },
+        "unrivaled_league": { "name": "Laces BC", "team_id": null, "league_id": null },
         "project_b_league": null,
         "european_club": null
       }
@@ -49,8 +49,8 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Seattle Storm", "team_id": 189 },
-        "unrivaled_league": { "name": "Breeze BC", "team_id": null },
+        "wnba_franchise": { "name": "Seattle Storm", "team_id": 189, "league_id": 12 },
+        "unrivaled_league": { "name": "Breeze BC", "team_id": null, "league_id": null },
         "project_b_league": null,
         "european_club": null
       }
@@ -66,10 +66,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393 },
+        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "USK Prague", "team_id": 612 }
+        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": null }
       }
     },
     {
@@ -83,10 +83,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186 },
+        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
         "unrivaled_league": null,
-        "project_b_league": { "name": "Project B League", "team_id": null },
-        "european_club": { "name": "USK Prague", "team_id": 612 }
+        "project_b_league": { "name": "Project B League", "team_id": null, "league_id": null },
+        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": null }
       }
     },
     {
@@ -100,10 +100,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Portland Fire", "team_id": null },
+        "wnba_franchise": { "name": "Portland Fire", "team_id": null, "league_id": null },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Mersin", "team_id": 1240 }
+        "european_club": { "name": "Mersin", "team_id": 1240, "league_id": null }
       }
     },
     {
@@ -117,10 +117,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Connecticut Sun", "team_id": 178 },
+        "wnba_franchise": { "name": "Connecticut Sun", "team_id": 178, "league_id": 12 },
         "unrivaled_league": null,
-        "project_b_league": { "name": "Project B League", "team_id": null },
-        "european_club": { "name": "Fenerbahce SK", "team_id": 605 }
+        "project_b_league": { "name": "Project B League", "team_id": null, "league_id": null },
+        "european_club": { "name": "Fenerbahce SK", "team_id": 605, "league_id": null }
       }
     },
     {
@@ -134,10 +134,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186 },
+        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Famila Schio", "team_id": 618 }
+        "european_club": { "name": "Famila Schio", "team_id": 618, "league_id": null }
       }
     },
     {
@@ -151,10 +151,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393 },
+        "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Fenerbahce Istanbul", "team_id": 605 }
+        "european_club": { "name": "Fenerbahce Istanbul", "team_id": 605, "league_id": null }
       }
     },
     {
@@ -168,10 +168,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "New York Liberty", "team_id": 182 },
+        "wnba_franchise": { "name": "New York Liberty", "team_id": 182, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Çukurova Basketbol", "team_id": 1255 }
+        "european_club": { "name": "Çukurova Basketbol", "team_id": 1255, "league_id": null }
       }
     },
     {
@@ -188,7 +188,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "BLMA", "team_id": 622 }
+        "european_club": { "name": "BLMA", "team_id": 622, "league_id": null }
       }
     },
     {
@@ -202,10 +202,10 @@
         "competitions": []
       },
       "clubs": {
-        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186 },
+        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Flammes Carolo", "team_id": 625 }
+        "european_club": { "name": "Flammes Carolo", "team_id": 625, "league_id": null }
       }
     },
     {
@@ -222,7 +222,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Besiktas", "team_id": 630 }
+        "european_club": { "name": "Besiktas", "team_id": 630, "league_id": null }
       }
     },
     {
@@ -236,10 +236,10 @@
         "competitions": ["FIBA World Cup", "EuroBasket"]
       },
       "clubs": {
-        "wnba_franchise": { "name": "New York Liberty", "team_id": 182 },
+        "wnba_franchise": { "name": "New York Liberty", "team_id": 182, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Prague", "team_id": 612 }
+        "european_club": { "name": "Prague", "team_id": 612, "league_id": null }
       }
     },
     {
@@ -256,7 +256,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Flammes Carolo", "team_id": 625 }
+        "european_club": { "name": "Flammes Carolo", "team_id": 625, "league_id": null }
       }
     },
     {
@@ -273,7 +273,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "LDLC ASVEL Féminin", "team_id": 610 }
+        "european_club": { "name": "LDLC ASVEL Féminin", "team_id": 610, "league_id": null }
       }
     }
   ]
