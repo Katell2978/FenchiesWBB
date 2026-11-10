@@ -168,7 +168,7 @@
         "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
       },
       "clubs": {
-        "wnba_franchise": New York Liberty,
+        "wnba_franchise": "New York Liberty,
         "unrivaled_league": null,
         "project_b_league": null,
         "european_club": "Çukurova Basketbol"
