@@ -14,7 +14,7 @@
     <div class="container py-5">
         <header class="mb-5 border-bottom border-secondary pb-3">
             <h1 class="fw-bold text-white">FrenchiesWBB — Agenda des joueuses</h1>
-            <p class="text-muted mb-0">Prochains matchs récupérés via API-Sports</p>
+            <p class="text-muted mb-0">Suivi des clubs et de l'Équipe de France</p>
         </header>
         <div id="players-schedule" class="row g-4"></div>
     </div>
@@ -30,11 +30,14 @@
                 const roster = await rosterRes.json();
                 const matchesData = await matchesRes.json();
                 
-                // Indexation des matchs par team_id
-                const matchesMap = {};
+                // Indexation des matchs de clubs par team_id
+                const clubMatchesMap = {};
                 (matchesData.matches || []).forEach(item => {
-                    matchesMap[item.team_id] = item.upcoming_games;
+                    clubMatchesMap[item.team_id] = item.upcoming_games;
                 });
+
+                const now = new Date();
+                const nationalGames = (matchesData.national_team_games || []).filter(g => new Date(g.date) >= now);
 
                 const container = document.getElementById('players-schedule');
 
@@ -43,26 +46,41 @@
                     let clubName = typeof clubInfo === 'object' && clubInfo !== null ? clubInfo.name : clubInfo;
                     let teamId = typeof clubInfo === 'object' && clubInfo !== null ? clubInfo.team_id : null;
                     
-                    let gamesHtml = '<span class="text-muted">Aucun match planifié</span>';
-                    if (teamId && matchesMap[teamId] && matchesMap[teamId].length > 0) {
-                        gamesHtml = matchesMap[teamId].map(g => `
-                            <div class="mb-1 text-white small">
-                                <strong>${new Date(g.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit'})}</strong><br>
-                                ${g.home} vs ${g.away}
+                    let scheduleHtml = '';
+
+                    // Matchs Équipe de France si la joueuse est sélectionnée en senior
+                    if (player.selections && player.selections.senior_team && nationalGames.length > 0) {
+                        scheduleHtml += `<div class="mb-2"><strong class="text-warning small">Équipe de France :</strong>`;
+                        nationalGames.forEach(g => {
+                            scheduleHtml += `
+                                <div class="text-white small ms-2">
+                                    • <strong>${new Date(g.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit'})}</strong> : ${g.home} vs ${g.away}
+                                </div>`;
+                        });
+                        scheduleHtml += `</div>`;
+                    }
+
+                    // Matchs de club
+                    let clubGamesHtml = '<span class="text-muted small">Aucun match de club planifié</span>';
+                    if (teamId && clubMatchesMap[teamId] && clubMatchesMap[teamId].length > 0) {
+                        clubGamesHtml = clubMatchesMap[teamId].map(g => `
+                            <div class="text-white small ms-2">
+                                • <strong>${new Date(g.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit'})}</strong> : ${g.home} vs ${g.away}
                             </div>
                         `).join('');
                     }
+
+                    scheduleHtml += `<div><strong class="text-info small">Club (${clubName || 'Aucun'}) :</strong>${clubGamesHtml}</div>`;
 
                     return `
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card h-100 rounded-4 p-3 shadow-sm">
                                 <div class="card-body">
                                     <h5 class="fw-bold text-white mb-1">${player.first_name} ${player.last_name}</h5>
-                                    <p class="text-muted small mb-2">Club : ${clubName || 'Aucun'}</p>
+                                    <p class="text-muted small mb-2">Poste : ${player.positions.join('/')}</p>
                                     <hr class="border-secondary">
                                     <div class="small">
-                                        <strong class="text-indigo-emphasis d-block mb-2">Prochains matchs :</strong>
-                                        ${gamesHtml}
+                                        ${scheduleHtml}
                                     </div>
                                 </div>
                             </div>
