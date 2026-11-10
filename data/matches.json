@@ -1,4 +1,75 @@
 {
   "updated_at": "2026-11-10",
-  "matches": []
+  "matches": [
+    {
+      "club": "Golden State Valkyries",
+      "team_id": 393,
+      "upcoming_games": []
+    },
+    {
+      "club": "New York Liberty",
+      "team_id": 182,
+      "upcoming_games": []
+    },
+    {
+      "club": "Seattle Storm",
+      "team_id": 189,
+      "upcoming_games": []
+    },
+    {
+      "club": "Prague",
+      "team_id": 612,
+      "upcoming_games": []
+    },
+    {
+      "club": "Phoenix Mercury",
+      "team_id": 186,
+      "upcoming_games": []
+    },
+    {
+      "club": "Mersin",
+      "team_id": 1240,
+      "upcoming_games": []
+    },
+    {
+      "club": "Connecticut Sun",
+      "team_id": 178,
+      "upcoming_games": []
+    },
+    {
+      "club": "Fenerbahce Istanbul",
+      "team_id": 605,
+      "upcoming_games": []
+    },
+    {
+      "club": "Famila Schio",
+      "team_id": 618,
+      "upcoming_games": []
+    },
+    {
+      "club": "Çukurova Basketbol",
+      "team_id": 1255,
+      "upcoming_games": []
+    },
+    {
+      "club": "BLMA",
+      "team_id": 622,
+      "upcoming_games": []
+    },
+    {
+      "club": "Flammes Carolo",
+      "team_id": 625,
+      "upcoming_games": []
+    },
+    {
+      "club": "Besiktas",
+      "team_id": 630,
+      "upcoming_games": []
+    },
+    {
+      "club": "LDLC ASVEL Féminin",
+      "team_id": 610,
+      "upcoming_games": []
+    }
+  ]
 }
