@@ -1,96 +1,121 @@
 import os
 import json
+import re
 import requests
 from datetime import datetime
 
 API_KEY = os.getenv("API_SPORTS_KEY")
 BASE_URL = "https://v1.basketball.api-sports.io"
-HEADERS = {
-    "x-apisports-key": API_KEY
-}
+HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
-def get_team_games(team_id):
-    if not team_id:
+def parse_ics_calendar(file_path):
+    """Parse le fichier ICS de l'Équipe de France sans dépendance externe."""
+    if not os.path.exists(file_path):
+        print(f"Fichier ICS non trouvé : {file_path}")
         return []
     
-    # 1. Récupérer dynamiquement les ligues et saisons de l'équipe
-    leagues_url = f"{BASE_URL}/leagues"
-    try:
-        res = requests.get(leagues_url, headers=HEADERS, params={"team": team_id}, timeout=10)
-        leagues_data = res.json().get("response", [])
-    except Exception as e:
-        print(f"Erreur lors de la récupération des ligues pour l'équipe {team_id} : {e}")
-        return []
-
-    games = []
-    now = datetime.utcnow()
-
-    # 2. Interroger les matchs pour chaque ligue et saison active trouvée
-    for league_info in leagues_data:
-        league_id = league_info["league"]["id"]
-        seasons = [s["season"] for s in league_info.get("seasons", [])]
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    events = []
+    vevents = content.split('BEGIN:VEVENT')
+    for vevent in vevents[1:]:
+        summary_match = re.search(r'SUMMARY:(.*?)(?:\r?\n|$)', vevent)
+        dtstart_match = re.search(r'DTSTART:(.*?)(?:\r?\n|$)', vevent)
         
-        # Cibler en priorité la saison en cours (2026 ou 2026-2027)
-        target_seasons = [s for s in seasons if str(s).startswith("2026") or str(s).startswith("2025")]
-        if not target_seasons and seasons:
-            target_seasons = [seasons[-1]]
-
-        for season in target_seasons:
-            games_url = f"{BASE_URL}/games"
-            params = {"team": team_id, "league": league_id, "season": season}
+        if summary_match and dtstart_match:
+            summary = summary_match.group(1).strip()
+            dtstart_str = dtstart_match.group(1).strip()
+            
+            # Conversion format ICS (20261111T163000Z) vers ISO
             try:
-                g_res = requests.get(games_url, headers=HEADERS, params=params, timeout=10)
-                g_data = g_res.json()
-                for game in g_data.get("response", []):
-                    game_date_str = game["date"]
-                    game_date = datetime.fromisoformat(game_date_str.replace("Z", ""))
-                    if game_date >= now and game.get("status", {}).get("short") == "NS":
-                        if not any(g["date"] == game_date_str and g["home"] == game["teams"]["home"]["name"] for g in games):
-                            games.append({
-                                "date": game_date_str,
-                                "home": game["teams"]["home"]["name"],
-                                "away": game["teams"]["away"]["name"]
-                            })
-            except Exception as e:
-                print(f"Erreur pour l'équipe {team_id}, ligue {league_id}, saison {season} : {e}")
-                
-    games.sort(key=lambda x: x["date"])
-    return games
+                dt = datetime.strptime(dtstart_str, '%Y%m%dT%H%M%SZ')
+                iso_date = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+            except ValueError:
+                iso_date = dtstart_str
+            
+            # Nettoyage du résumé (ex: "France 🆚 Grande-Bretagne")
+            teams = re.split(r'\s*[🆚vV][sS]?\s*', summary)
+            home = teams[0].strip() if len(teams) > 0 else "France"
+            away = teams[1].strip() if len(teams) > 1 else ""
+            
+            events.append({
+                "entity": "Équipe de France",
+                "competition": "EuroBasket 2027 Qualifiers",
+                "home": home,
+                "away": away,
+                "date": iso_date
+            })
+    return events
+
+def fetch_club_games(team_id, club_name):
+    """Récupère les matchs d'un club via API-Sports."""
+    if not API_KEY:
+        return []
+    
+    for season in ["2026-2027", "2026", "2025-2026"]:
+        url = f"{BASE_URL}/games"
+        params = {"team": team_id, "season": season}
+        try:
+            response = requests.get(url, headers=HEADERS, params=params, timeout=10)
+            data = response.json()
+            games = []
+            now = datetime.utcnow()
+            for game in data.get("response", []):
+                game_date_str = game["date"]
+                game_date = datetime.fromisoformat(game_date_str.replace("Z", ""))
+                if game_date >= now and game.get("status", {}).get("short") == "NS":
+                    games.append({
+                        "entity": club_name,
+                        "competition": game.get("league", {}).get("name", "Club Match"),
+                        "home": game["teams"]["home"]["name"],
+                        "away": game["teams"]["away"]["name"],
+                        "date": game_date_str
+                    })
+            if games:
+                return games
+        except Exception as e:
+            print(f"Erreur API pour {club_name} (ID {team_id}) : {e}")
+    return []
 
 def main():
-    if not API_KEY:
-        print("Erreur : API_SPORTS_KEY absente.")
-        return
+    os.makedirs("data", exist_ok=True)
+    
+    # 1. Charger les matchs de l'Équipe de France depuis l'ICS
+    ics_path = "data/agenda_edf.ics"
+    all_matches = parse_ics_calendar(ics_path)
+    print(f"{len(matches_edf := all_matches)} match(es) de l'Équipe de France chargés.")
 
-    with open("data/joueuses.json", "r", encoding="utf-8") as f:
-        roster = json.load(f)
+    # 2. Charger les joueuses pour identifier les clubs et leurs team_id
+    roster_path = "data/joueuses.json"
+    if os.path.exists(roster_path):
+        with open(roster_path, 'r', encoding='utf-8') as f:
+            roster = json.load(f)
+        
+        checked_teams = set()
+        for player in roster.get("players", []):
+            for club_info in player.get("clubs", {}).values():
+                if isinstance(club_info, dict) and club_info.get("team_id"):
+                    t_id = club_info["team_id"]
+                    c_name = club_info["name"]
+                    if t_id not in checked_teams:
+                        checked_teams.add(t_id)
+                        print(f"Récupération des matchs pour : {c_name} (ID: {t_id})...")
+                        club_games = fetch_club_games(t_id, c_name)
+                        all_matches.extend(club_games)
 
-    teams_to_check = {}
-    for player in roster.get("players", []):
-        for club_info in player.get("clubs", {}).values():
-            if isinstance(club_info, dict) and club_info.get("team_id"):
-                teams_to_check[club_info["team_id"]] = club_info["name"]
-
-    schedule_results = []
-    for team_id, club_name in teams_to_check.items():
-        print(f"Récupération pour {club_name} (ID : {team_id})...")
-        games = get_team_games(team_id)
-        schedule_results.append({
-            "club": club_name,
-            "team_id": team_id,
-            "upcoming_games": games
-        })
+    # Trier tous les matchs par date croissante
+    all_matches.sort(key=lambda x: x["date"])
 
     output_data = {
         "updated_at": datetime.utcnow().strftime("%Y-%m-%d"),
-        "matches": schedule_results
+        "matches": all_matches
     }
 
-    os.makedirs("data", exist_ok=True)
     with open("data/matches.json", "w", encoding="utf-8") as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-    print("Fichier data/matches.json généré avec succès.")
+    print("Fichier data/matches.json généré avec succès !")
 
 if __name__ == "__main__":
     main()
