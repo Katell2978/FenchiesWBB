@@ -9,10 +9,13 @@ HEADERS = {
     "x-apisports-key": API_KEY
 }
 
-def get_upcoming_games(team_id):
+def get_upcoming_games(team_id, league_id):
     for season in ["2026-2027", "2026"]:
         url = f"{BASE_URL}/games"
         params = {"team": team_id, "season": season}
+        if league_id:
+            params["league"] = league_id
+            
         try:
             response = requests.get(url, headers=HEADERS, params=params, timeout=10)
             data = response.json()
@@ -45,14 +48,17 @@ def main():
     for player in roster.get("players", []):
         for club_info in player.get("clubs", {}).values():
             if isinstance(club_info, dict) and club_info.get("team_id"):
-                teams_to_check[club_info["team_id"]] = club_info["name"]
+                teams_to_check[club_info["team_id"]] = {
+                    "name": club_info["name"],
+                    "league_id": club_info.get("league_id")
+                }
 
     schedule_results = []
-    for team_id, club_name in teams_to_check.items():
-        print(f"Récupération pour {club_name} (ID : {team_id})")
-        games = get_upcoming_games(team_id)
+    for team_id, info in teams_to_check.items():
+        print(f"Récupération pour {info['name']} (ID : {team_id}, Ligue : {info['league_id']})")
+        games = get_upcoming_games(team_id, info['league_id'])
         schedule_results.append({
-            "club": club_name,
+            "club": info['name'],
             "team_id": team_id,
             "upcoming_games": games
         })
