@@ -137,7 +137,7 @@
         "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Famila Schio", "team_id": 618, "league_id": null }
+        "european_club": { "name": "Famila Schio", "team_id": 618, "league_id": 53 }
       }
     },
     {
@@ -175,57 +175,6 @@
       }
     },
     {
-      "first_name": "Romane",
-      "last_name": "BERNIES",
-      "birth_date": "1993-06-27",
-      "positions": ["1"],
-      "selections": {
-        "senior_team": true,
-        "u20_team": true,
-        "competitions": ["FIBA World Cup"]
-      },
-      "clubs": {
-        "wnba_franchise": null,
-        "unrivaled_league": null,
-        "project_b_league": null,
-        "european_club": { "name": "BLMA", "team_id": 622, "league_id": null }
-      }
-    },
-    {
-      "first_name": "Alexia",
-      "last_name": "CHÉRY",
-      "birth_date": "1998-09-05",
-      "positions": ["4"],
-      "selections": {
-        "senior_team": true,
-        "u20_team": true,
-        "competitions": []
-      },
-      "clubs": {
-        "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
-        "unrivaled_league": null,
-        "project_b_league": null,
-        "european_club": { "name": "Flammes Carolo", "team_id": 625, "league_id": null }
-      }
-    },
-    {
-      "first_name": "Mamignan",
-      "last_name": "TOURÉ",
-      "birth_date": "1994-11-04",
-      "positions": ["2", "3"],
-      "selections": {
-        "senior_team": true,
-        "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket Qualifiers"]
-      },
-      "clubs": {
-        "wnba_franchise": null,
-        "unrivaled_league": null,
-        "project_b_league": null,
-        "european_club": { "name": "Besiktas", "team_id": 630, "league_id": null }
-      }
-    },
-    {
       "first_name": "Pauline",
       "last_name": "ASTIER",
       "birth_date": "2002-02-15",
@@ -244,7 +193,7 @@
           "team_id": 612, 
           "league_id": 128,
           "competitions": [
-            { "name": "ŽBL", "league_id": null },
+            { "name": "ŽBL", "league_id": 33 },
             { "name": "EuroLeague Women", "league_id": 8972 }
           ]
         }
@@ -264,7 +213,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Flammes Carolo", "team_id": 625, "league_id": null }
+        "european_club": { "name": "Flammes Carolo", "team_id": 625, "league_id": 231 }
       }
     },
     {
@@ -281,7 +230,7 @@
         "wnba_franchise": null,
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "LDLC ASVEL Féminin", "team_id": 610, "league_id": null }
+        "european_club": { "name": "LDLC ASVEL Féminin", "team_id": 610, "league_id": 231 }
       }
     }
   ]
