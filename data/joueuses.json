@@ -1,6 +1,6 @@
 {
   "project": "FrenchiesWBB",
-  "updated_at": "2026-11-10",
+  "updated_at": "2026-11-12",
   "context": "Roster actualisé avec team_id et league_id pour API-Sports",
   "players_count": 16,
   "players": [
@@ -69,7 +69,7 @@
         "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": null }
+        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": 128 }
       }
     },
     {
@@ -86,7 +86,7 @@
         "wnba_franchise": { "name": "Phoenix Mercury", "team_id": 186, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": { "name": "Project B League", "team_id": null, "league_id": null },
-        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": null }
+        "european_club": { "name": "USK Prague", "team_id": 612, "league_id": 128 }
       }
     },
     {
@@ -103,7 +103,7 @@
         "wnba_franchise": { "name": "Portland Fire", "team_id": null, "league_id": null },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Mersin", "team_id": 1240, "league_id": null }
+        "european_club": { "name": "Mersin", "team_id": 1240, "league_id": 105 }
       }
     },
     {
@@ -120,7 +120,7 @@
         "wnba_franchise": { "name": "Connecticut Sun", "team_id": 178, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": { "name": "Project B League", "team_id": null, "league_id": null },
-        "european_club": { "name": "Fenerbahce SK", "team_id": 605, "league_id": null }
+        "european_club": { "name": "Fenerbahce SK", "team_id": 605, "league_id": 105 }
       }
     },
     {
@@ -154,7 +154,7 @@
         "wnba_franchise": { "name": "Golden State Valkyries", "team_id": 393, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Fenerbahce Istanbul", "team_id": 605, "league_id": null }
+        "european_club": { "name": "Fenerbahce Istanbul", "team_id": 605, "league_id": 105 }
       }
     },
     {
@@ -171,7 +171,7 @@
         "wnba_franchise": { "name": "New York Liberty", "team_id": 182, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Çukurova Basketbol", "team_id": 1255, "league_id": null }
+        "european_club": { "name": "Çukurova Basketbol", "team_id": 1255, "league_id": 105 }
       }
     },
     {
@@ -231,15 +231,23 @@
       "birth_date": "2002-02-15",
       "positions": ["1", "2"],
       "selections": {
-        "senior_team": true,
+        "senior_team": false,
         "u20_team": true,
-        "competitions": ["FIBA World Cup", "EuroBasket"]
+        "competitions": []
       },
       "clubs": {
         "wnba_franchise": { "name": "New York Liberty", "team_id": 182, "league_id": 12 },
         "unrivaled_league": null,
         "project_b_league": null,
-        "european_club": { "name": "Prague", "team_id": 612, "league_id": null }
+        "european_club": { 
+          "name": "Prague", 
+          "team_id": 612, 
+          "league_id": 128,
+          "competitions": [
+            { "name": "ŽBL", "league_id": null },
+            { "name": "EuroLeague Women", "league_id": 8972 }
+          ]
+        }
       }
     },
     {
