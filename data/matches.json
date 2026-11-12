@@ -1,47 +1,4 @@
 {
-  "updated_at": "2026-11-11",
-  "matches": [
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "France",
-      "away": "Grande-Bretagne",
-      "date": "2026-11-11T16:30:00Z"
-    },
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "Luxembourg",
-      "away": "France",
-      "date": "2026-11-14T17:00:00Z"
-    },
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "Ukraine",
-      "away": "France",
-      "date": "2026-11-17T12:00:00Z"
-    },
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "France",
-      "away": "Luxembourg",
-      "date": "2027-02-13T19:00:00Z"
-    },
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "Grande-Bretagne",
-      "away": "France",
-      "date": "2027-02-15T19:00:00Z"
-    },
-    {
-      "entity": "Équipe de France",
-      "competition": "EuroBasket 2027 Qualifiers",
-      "home": "France",
-      "away": "Ukraine",
-      "date": "2027-02-18T19:00:00Z"
-    }
-  ]
+  "updated_at": "2026-11-12",
+  "matches": []
 }
