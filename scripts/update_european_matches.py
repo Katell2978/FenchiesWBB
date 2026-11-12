@@ -3,7 +3,7 @@ import json
 import requests
 from datetime import datetime
 
-API_KEY = os.getenv("API_SPORTS_KEY")
+API_KEY = os.getenv("API_SPORTS_KEY", "").strip()
 BASE_URL = "https://v1.basketball.api-sports.io"
 HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
