@@ -9,6 +9,7 @@ HEADERS = {"x-apisports-key": API_KEY} if API_KEY else {}
 
 def get_club_games_for_competition(team_id, league_id, club_name, comp_name):
     if not API_KEY or not team_id:
+        print(f"[DEBUG] Clé API ou Team ID manquant pour {club_name}")
         return []
     
     seasons = ["2026-2027", "2026", "2025-2026"]
@@ -19,8 +20,12 @@ def get_club_games_for_competition(team_id, league_id, club_name, comp_name):
             params["league"] = league_id
             
         try:
+            print(f"[DEBUG] Appel API -> Club: {club_name} | Compétition: {comp_name} | URL: {url} | Params: {params}")
             response = requests.get(url, headers=HEADERS, params=params, timeout=10)
             data = response.json()
+            
+            print(f"[DEBUG] Réponse API (status {response.status_code}) : {data}")
+            
             games = []
             now = datetime.utcnow()
             
@@ -40,15 +45,20 @@ def get_club_games_for_competition(team_id, league_id, club_name, comp_name):
                         "date": game_date_str
                     })
             if games:
+                print(f"[SUCCÈS] {len(games)} match(es) trouvé(s) pour {club_name} ({comp_name}) en saison {season}")
                 return games
         except Exception as e:
             print(f"Erreur API pour {club_name} ({comp_name}) : {e}")
             
+    print(f"[AVERTISSEMENT] Aucun match trouvé pour {club_name} sur les saisons testées.")
     return []
 
 def main():
+    if not API_KEY:
+        print("Erreur critique : API_SPORTS_KEY est vide.")
+        return
+
     json_path = "data/matches.json"
-    
     existing_matches = []
     if os.path.exists(json_path):
         try:
@@ -73,7 +83,6 @@ def main():
             active_clubs.add(club["name"])
 
     preserved_matches = [m for m in existing_matches if m.get("entity") not in active_clubs]
-
     new_club_matches = []
     checked_keys = set()
 
@@ -91,7 +100,6 @@ def main():
                     key = (t_id, l_id)
                     if key not in checked_keys:
                         checked_keys.add(key)
-                        print(f"Récupération : {c_name} — {c_name_comp} (Team ID: {t_id}, League ID: {l_id})")
                         games = get_club_games_for_competition(t_id, l_id, c_name, c_name_comp)
                         if games:
                             new_club_matches.extend(games)
@@ -100,7 +108,6 @@ def main():
                 key = (t_id, l_id)
                 if key not in checked_keys:
                     checked_keys.add(key)
-                    print(f"Récupération : {c_name} (Team ID: {t_id})")
                     games = get_club_games_for_competition(t_id, l_id, c_name, "Championnat / Coupe")
                     if games:
                         new_club_matches.extend(games)
