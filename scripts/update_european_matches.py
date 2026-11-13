@@ -7,7 +7,8 @@ from datetime import datetime
 def get_usk_prague_games():
     matches = []
     # URL officielle FIBA EuroLeague Women 2026-2027
-    url = "https://www.fiba.basketball/en/events/euroleague-women-26-27/schedules"
+    #url = "https://www.fiba.basketball/en/events/euroleague-women-26-27/schedules"
+    url = "https://www.fiba.basketball/en/events/euroleague-women-26-27/games"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
